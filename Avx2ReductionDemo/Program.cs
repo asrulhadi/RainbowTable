@@ -110,7 +110,7 @@ class BaselineReduction
         Span<ulong> r = results;
         for (int i = 0; i < h.Length; i++)
         {
-            ulong step = (ulong)((s[i] + 1) * CONST1);
+            ulong step = (ulong)(s[i] + 1) * CONST1;
             ulong mix = h[i] ^ step ^ ((ulong)tableId * CONST2);
             r[i] = mix & MASK40;
         }
@@ -125,7 +125,7 @@ class BaselineReduction
             {
                 for (int i = 0; i < hashes.Length; i++)
                 {
-                    ulong step = (ulong)((s[i] + 1) * CONST1);
+                    ulong step = (ulong)(s[i] + 1) * CONST1;
                     ulong mix = h[i] ^ step ^ ((ulong)tableId * CONST2);
                     r[i] = mix & MASK40;
                 }
