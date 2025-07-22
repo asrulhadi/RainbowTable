@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighSpeedRainbowLookup", "HighSpeedRainbowLookup\HighSpeedRainbowLookup.csproj", "{D5AF5F9A-2CE3-4943-A31D-F50123AC9206}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avx2ReductionDemo", "Avx2ReductionDemo\Avx2ReductionDemo.csproj", "{5B5FD749-403C-4F1B-87B9-A33C672BD8B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D5AF5F9A-2CE3-4943-A31D-F50123AC9206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5AF5F9A-2CE3-4943-A31D-F50123AC9206}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5AF5F9A-2CE3-4943-A31D-F50123AC9206}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5FD749-403C-4F1B-87B9-A33C672BD8B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5FD749-403C-4F1B-87B9-A33C672BD8B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5FD749-403C-4F1B-87B9-A33C672BD8B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5FD749-403C-4F1B-87B9-A33C672BD8B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
