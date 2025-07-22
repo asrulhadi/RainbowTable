@@ -17,23 +17,32 @@ class AvxReduction
         int width = Vector256<ulong>.Count; // 4
         int length = hashes.Length;
 
-        Parallel.For(0, length / width, i =>
+        unsafe
         {
-            int offset = i * width;
+            fixed (ulong* pHashes = hashes)
+            fixed (ulong* pResults = results)
+            {
+                ulong* _hashes = pHashes;
+                ulong* _results = pResults;
+                Parallel.For(0, length / width, i =>
+                {
+                    int offset = i * width;
 
-            Vector256<ulong> hashVec = Avx.LoadVector256(hashes, offset);
-            Vector256<ulong> stepVec = CreateStepVector(steps, offset);
-            Vector256<ulong> tableVec = Vector256.Create((ulong)(tableId * CONST2));
+                    Vector256<ulong> hashVec = Avx.LoadVector256(_hashes + offset);
+                    Vector256<ulong> stepVec = CreateStepVector(steps, offset);
+                    Vector256<ulong> tableVec = Vector256.Create((ulong)tableId * CONST2);
 
-            Vector256<ulong> mixed = Avx2.Xor(Avx2.Xor(hashVec, stepVec), tableVec);
-            Vector256<ulong> masked = Avx2.And(mixed, Vector256.Create(MASK40));
+                    Vector256<ulong> mixed = Avx2.Xor(Avx2.Xor(hashVec, stepVec), tableVec);
+                    Vector256<ulong> masked = Avx2.And(mixed, Vector256.Create(MASK40));
 
-            Avx.Store(results, offset, masked);
-        });
+                    Avx.Store(_results + offset, masked);
+                });
+            }
+        }
 
         for (int i = (length / width) * width; i < length; i++)
         {
-            ulong step = (ulong)((steps[i] + 1) * CONST1);
+            ulong step = ((ulong)(steps[i] + 1) * CONST1);
             ulong mix = hashes[i] ^ step ^ ((ulong)tableId * CONST2);
             results[i] = mix & MASK40;
         }
@@ -42,10 +51,10 @@ class AvxReduction
     private static Vector256<ulong> CreateStepVector(int[] steps, int offset)
     {
         return Vector256.Create(
-            (ulong)((steps[offset] + 1) * CONST1),
-            (ulong)((steps[offset + 1] + 1) * CONST1),
-            (ulong)((steps[offset + 2] + 1) * CONST1),
-            (ulong)((steps[offset + 3] + 1) * CONST1)
+            (ulong)(steps[offset] + 1) * CONST1,
+            (ulong)(steps[offset + 1] + 1) * CONST1,
+            (ulong)(steps[offset + 2] + 1) * CONST1,
+            (ulong)(steps[offset + 3] + 1) * CONST1
         );
     }
 }
